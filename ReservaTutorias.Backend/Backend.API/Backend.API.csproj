@@ -4,5 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Backend.BS\Backend.BS.csproj" />
+    <ProjectReference Include="..\Backend.DAL.EF\Backend.DAL.EF.csproj" />
+    <ProjectReference Include="..\Backend.DO\Backend.DO.csproj" />
+  </ItemGroup>
+
 
 </Project>

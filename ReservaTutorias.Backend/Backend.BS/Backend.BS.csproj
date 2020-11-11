@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Backend.DAL.EF\Backend.DAL.EF.csproj" />
+    <ProjectReference Include="..\Backend.DAL\Backend.DAL.csproj" />
+    <ProjectReference Include="..\Backend.DO\Backend.DO.csproj" />
+  </ItemGroup>
+
 </Project>
