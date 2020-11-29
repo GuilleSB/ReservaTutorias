@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ReservaTutorias.Frontend.Models.Horario>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHorario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTutor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMateria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTema)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaHora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LimiteEstudiantes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHorario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTutor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMateria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTema)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaHora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LimiteEstudiantes)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdHorario }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdHorario }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdHorario })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

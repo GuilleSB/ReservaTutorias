@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ReservaTutorias.Frontend.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdReserva)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstudiante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHorario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdReserva)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstudiante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHorario)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id = item.IdReserva  }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdReserva }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdReserva })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ReservaTutorias.Frontend.Models.Materia>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMateria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreMateria)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMateria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreMateria)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.IdMateria }) |
+                @Html.ActionLink("Detalle", "Details", new { id = item.IdMateria }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdMateria })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
