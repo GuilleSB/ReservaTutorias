@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+
+#nullable disable
 
 namespace Backend.DO.Objects
 {
-    public class Tema
+    public partial class Tema
     {
         [Key]
         public int IdTema { get; set; }

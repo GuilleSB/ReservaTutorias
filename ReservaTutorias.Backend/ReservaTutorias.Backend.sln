@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.DO", "Backend.DO\Backend.DO.csproj", "{4FB1D753-C93C-46AC-BB93-6291E175F483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.DAL.Repository", "Backend.DAL.Repository\Backend.DAL.Repository.csproj", "{BFF400F5-8181-4EF3-B966-2B10B1E38C67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.DAL.Repository", "Backend.DAL.Repository\Backend.DAL.Repository.csproj", "{BFF400F5-8181-4EF3-B966-2B10B1E38C67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.DAL.EF", "Backend.DAL.EF\Backend.DAL.EF.csproj", "{26881F6A-AD1C-47E5-B9CD-DAD11DF7EBB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.DAL.EF", "Backend.DAL.EF\Backend.DAL.EF.csproj", "{26881F6A-AD1C-47E5-B9CD-DAD11DF7EBB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.DAL", "Backend.DAL\Backend.DAL.csproj", "{7D5AF695-44DB-407B-BC45-743F613B870C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.DAL", "Backend.DAL\Backend.DAL.csproj", "{7D5AF695-44DB-407B-BC45-743F613B870C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.BS", "Backend.BS\Backend.BS.csproj", "{8A13E24E-22C1-453C-AB69-DACC6892F6AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.BS", "Backend.BS\Backend.BS.csproj", "{8A13E24E-22C1-453C-AB69-DACC6892F6AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.API", "Backend.API\Backend.API.csproj", "{B306803F-D710-481A-AA49-BE7E00DB612E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.API", "Backend.API\Backend.API.csproj", "{B306803F-D710-481A-AA49-BE7E00DB612E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

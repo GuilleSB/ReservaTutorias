@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+
+#nullable disable
 
 namespace Backend.DO.Objects
 {
-    public class Materia
+    public partial class Materia
     {
         [Key]
         public int IdMateria { get; set; }
         public string NombreMateria { get; set; }
+
     }
 }

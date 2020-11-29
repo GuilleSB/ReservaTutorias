@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+
+#nullable disable
 
 namespace Backend.DO.Objects
 {
-    public class Horario
+    public partial class Horario
     {
         [Key]
         public int IdHorario { get; set; }
         public int IdTutor { get; set; }
-        public string Dia { get; set; }
-        public DateTime Hora { get; set; }
+        public int IdMateria { get; set; }
+        public int IdTema { get; set; }
+        public DateTime FechaHora { get; set; }
+        public int LimiteEstudiantes { get; set; }
     }
 }
