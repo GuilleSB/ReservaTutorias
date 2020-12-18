@@ -2,17 +2,18 @@
 using Backend.DAL.Repository;
 using Backend.DO.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Data = Backend.DO.Objects;
 
 namespace Backend.DAL
 {
     public class Tema : ICRUD<Data.Tema>
     {
-        private Repository<Data.Tema> _repo = null;
+        private RepositoryTema _repo = null;
 
         public Tema(BackendDbContext dbContext)
         {
-            _repo = new Repository<Data.Tema>(dbContext);
+            _repo = new RepositoryTema(dbContext);
         }
 
         public void Delete(Data.Tema t)
@@ -25,7 +26,14 @@ namespace Backend.DAL
         {
             return _repo.GetAll();
         }
-
+        public async Task<IEnumerable<Data.Tema>> GetAllInclude()
+        {
+            return await _repo.GetAllWithTemaAsync();
+        }
+        public async Task<Data.Tema> GetByIdInclude(int id)
+        {
+            return await _repo.GetWithTemaByIdAsync(id);
+        }
         public Data.Tema GetOneById(int id)
         {
             return _repo.GetOneById(id);

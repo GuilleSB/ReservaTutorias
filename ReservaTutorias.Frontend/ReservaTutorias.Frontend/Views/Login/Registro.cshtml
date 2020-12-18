@@ -1,0 +1,70 @@
+﻿@model Usuario
+@{
+    ViewData["Title"] = "Registro";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-2">Crear cuenta</h1>
+                        <p class="mb-4">
+                            Crea tu usuario ingresando los datos en este formulario.
+                        </p>
+                    </div>
+                    <form asp-controller="Login" asp-action="Registro">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <label asp-for="Cedula" class="control-label"></label>
+                                <input asp-for="Cedula" class="form-control" />
+                                <span asp-validation-for="Cedula" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-12">
+                                <label asp-for="Nombre" class="control-label"></label>
+                                <input asp-for="Nombre" class="form-control" />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-12">
+                                <label asp-for="Apellidos" class="control-label"></label>
+                                <input asp-for="Apellidos" class="form-control" />
+                                <span asp-validation-for="Apellidos" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-12">
+                                <label asp-for="Correo" class="control-label"></label>
+                                <input asp-for="Correo" class="form-control" />
+                                <span asp-validation-for="Correo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-12">
+                                <label asp-for="Clave" class="control-label"></label>
+                                <input type="password" asp-for="Clave" class="form-control" />
+                                <span asp-validation-for="Clave" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-12">
+                                <label asp-for="TipoUsuario" class="control-label"></label>
+                                <select asp-for="TipoUsuario" class="form-control">
+                                    <option value="Tutor">Tutor</option>
+                                    <option value="Estudiante">Estudiante</option>
+                                </select>
+                                <span asp-validation-for="TipoUsuario" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-12">
+                                <input type="submit" value="Guardar" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="@Url.Action("Index","Login")">Regresar a inicio de sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

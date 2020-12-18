@@ -1,0 +1,41 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-2">Recuperar clave</h1>
+                        <p class="mb-4">
+                            Te estará llegando un correo con una nueva clave temporal. Deberás ingresar con dicha clave. Te recomendamos
+                             cambiar después de contraseña
+                        </p>
+                    </div>
+                    <form class="user" asp-controller="Login" asp-action="RecuperarClave">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user"
+                                   name="destinatario" aria-describedby="emailHelp"
+                                   placeholder="Correo electrónico">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            Recuperar clave
+                        </button>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="@Url.Action("Registro","Login")">Crear una cuenta</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="@Url.Action("Index","Login")">Iniciar sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

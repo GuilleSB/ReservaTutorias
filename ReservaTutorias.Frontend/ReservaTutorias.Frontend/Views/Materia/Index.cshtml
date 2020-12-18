@@ -4,39 +4,48 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h1>Lista de materias</h1>
 
-<h1>Index</h1>
+        <p>
+            <a asp-action="Create">Ingresar nueva materia</a>
+        </p>
+        <table class="table datatable_init">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.IdMateria)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.NombreMateria)
+                    </th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdMateria)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreMateria)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-circle btn-sm" href="@Url.Action("Edit","Materia", new { id = item.IdMateria })">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a class="btn btn-danger btn-circle btn-sm" href="@Url.Action("Delete", "Materia", new { id = item.IdMateria })">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdMateria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreMateria)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdMateria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreMateria)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.IdMateria }) |
-                @Html.ActionLink("Detalle", "Details", new { id = item.IdMateria }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdMateria })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+

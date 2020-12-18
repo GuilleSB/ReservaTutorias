@@ -76,9 +76,16 @@ namespace Backend.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Data.Reserva>> PostReserva(Data.Reserva Reserva)
         {
-            new BS.Reserva(_context).Insert(Reserva);
-
-            return CreatedAtAction("GetReserva", new { id = Reserva.IdReserva }, Reserva);
+            try
+            {
+                new BS.Reserva(_context).Insert(Reserva);
+                return CreatedAtAction("GetReserva", new { id = Reserva.IdReserva }, Reserva);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         // DELETE: api/Reserva/5

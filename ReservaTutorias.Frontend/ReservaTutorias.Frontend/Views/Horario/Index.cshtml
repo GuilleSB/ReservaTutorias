@@ -1,180 +1,67 @@
-﻿@*@model IEnumerable<ReservaTutorias.Frontend.Models.Horario>
+﻿@model IEnumerable<ReservaTutorias.Frontend.Models.ModelViews.ViewHorario>
 
-    @{
-        ViewData["Title"] = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-
-    <h1>Index</h1>
-
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdHorario)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdTutor)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdMateria)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdTema)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FechaHora)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LimiteEstudiantes)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdHorario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdTutor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdMateria)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdTema)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaHora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LimiteEstudiantes)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.IdHorario }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.IdHorario }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.IdHorario })
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>*@
-
-@section ScriptsIniciales {
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth'
-            },
-            selectable: true,
-            selectMirror: true,
-            select: function (arg) {
-                const { value: formValues } = Swal.fire({
-                    title: 'Crear tutoría',
-                    html:
-                        '<select class="form-control" id="idTutor">' +
-                        '<option value="0">Seleccionar tutor</option>' +
-                        '</select>' +
-                        '<select class="form-control" id="idMateria">' +
-                        '<option value="0">Seleccionar materia</option>' +
-                        '</select>' +
-                        '<select class="form-control" id="idTema">' +
-                        '<option value="0">Seleccionar tema</option>' +
-                        '</select>' + 
-                        '<input type="time" class="form-control" id="hora" />',
-                    focusConfirm: false,
-                    preConfirm: () => {
-                        return [
-                            document.getElementById('idTutor').value,
-                            document.getElementById('idMateria').value,
-                            document.getElementById('idTema').value,
-                            document.getElementById('hora').value
-                        ]
-                    }
-                }).then((value) => {
-                    calendar.addEvent({
-                        title: JSON.stringify(formValues),
-                        start: arg.start,
-                        end: arg.end,
-                        allDay: arg.allDay
-                    });
-                });
-
-                
-                calendar.unselect()
-            },
-            eventClick: function (arg) {
-                if (confirm('Are you sure you want to delete this event?')) {
-                    arg.event.remove()
-                }
-            },
-            editable: true,
-            dayMaxEvents: true, // allow "more" link when too many events
-            events: [
-                {
-                    title: 'All Day Event',
-                    start: '2020-09-01'
-                },
-                {
-                    title: 'Long Event',
-                    start: '2020-09-07',
-                    end: '2020-09-10'
-                },
-                {
-                    groupId: 999,
-                    title: 'Repeating Event',
-                    start: '2020-09-09T16:00:00'
-                },
-                {
-                    groupId: 999,
-                    title: 'Repeating Event',
-                    start: '2020-09-16T16:00:00'
-                },
-                {
-                    title: 'Conference',
-                    start: '2020-09-11',
-                    end: '2020-09-13'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2020-09-12T10:30:00',
-                    end: '2020-09-12T12:30:00'
-                },
-                {
-                    title: 'Lunch',
-                    start: '2020-09-12T12:00:00'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2020-09-12T14:30:00'
-                },
-                {
-                    title: 'Happy Hour',
-                    start: '2020-09-12T17:30:00'
-                },
-                {
-                    title: 'Dinner',
-                    start: '2020-09-12T20:00:00'
-                },
-                {
-                    title: 'Birthday Party',
-                    start: '2020-09-13T07:00:00'
-                }
-            ]
-
-        });
-        calendar.render();
-        calendar.setOption('locale', 'es');
-    });
-</script>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="calendar"></div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
+
+        <h1>Mis horarios</h1>
+
+        <p>
+            <a asp-action="Create">Nuevo horario</a>
+        </p>
+        <table class="table datatable_init">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Tema
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Horario.FechaHora)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Horario.LimiteEstudiantes)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Horario.IdHorario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tema.NombreTema)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Horario.FechaHora)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Horario.LimiteEstudiantes)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-circle btn-sm" href="@Url.Action("Edit","Horario", new { id = item.Horario.IdHorario })">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a class="btn btn-info btn-circle btn-sm" href="@Url.Action("Details", "Horario", new { id = item.Horario.IdHorario })">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                            <a class="btn btn-danger btn-circle btn-sm" href="@Url.Action("Delete", "Horario", new { id = item.Horario.IdHorario })">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

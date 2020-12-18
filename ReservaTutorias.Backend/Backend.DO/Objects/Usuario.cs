@@ -15,6 +15,6 @@ namespace Backend.DO.Objects
         public string Apellidos { get; set; }
         public string Correo { get; set; }
         public string Clave { get; set; }
-        public int IdTipoUsuario { get; set; }
+        public string TipoUsuario { get; set; } // Administrador - Tutor - Estudiante
     }
 }

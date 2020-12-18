@@ -1,55 +1,66 @@
-﻿@model ReservaTutorias.Frontend.Models.Horario
+﻿@model ReservaTutorias.Frontend.Models.ModelViews.ViewHorario
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div>
+            <h4>Detalle de horario</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Tutor
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Tutor.Nombre)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Tema.NombreTema)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Tema.NombreTema)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Horario.FechaHora)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Horario.FechaHora)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Horario.LimiteEstudiantes)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Horario.LimiteEstudiantes)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-10 mb-3">
+            <h3>Reservaciones actuales</h3>
+            <ul class="list-group">
 
-<div>
-    <h4>Horario</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdHorario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdHorario)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTutor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTutor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdMateria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdMateria)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTema)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTema)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaHora)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaHora)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LimiteEstudiantes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LimiteEstudiantes)
-        </dd>
-    </dl>
+                @if ((ViewBag.Matriculados as List<string>).Count > 0)
+                {
+                    @foreach (var item in ViewBag.Matriculados as List<string>)
+                    {
+                        <li class="list-group-item">@item</li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item">No hay estudiantes matriculados</li>
+                }
+
+
+            </ul>
+        </div>
+        <div>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Horario.IdHorario }) |
+            <a asp-action="Index">Volver</a>
+        </div>
+
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdHorario }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+

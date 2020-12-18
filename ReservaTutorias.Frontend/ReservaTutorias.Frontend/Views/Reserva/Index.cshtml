@@ -1,48 +1,209 @@
-﻿@model IEnumerable<ReservaTutorias.Frontend.Models.Reserva>
+﻿@model IEnumerable<ReservaTutorias.Frontend.Models.ModelViews.ViewReserva>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h1>Mis reservaciones</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdReserva)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEstudiante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdHorario)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdReserva)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEstudiante)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdHorario)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id = item.IdReserva  }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IdReserva }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IdReserva })
-            </td>
-        </tr>
+        <p>
+            <a asp-action="Create" data-toggle="modal" data-target="#horariosDisponibles">Reservar tutoría</a>
+        </p>
+        <table class="table datatable_init">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Reserva.IdReserva)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Horario.Tema.NombreTema)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Horario.Horario.FechaHora)
+                    </th>
+                    <th>
+                        Tutor
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reserva.IdReserva)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Horario.Tema.NombreTema)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Horario.Horario.FechaHora)
+                        </td>
+                        <td>
+                            @item.Horario.Tutor.Nombre @item.Horario.Tutor.Apellidos
+                        </td>
+                        <td>
+                            <button class="btn btn-info btn-circle btn-sm openModal" value="@item.Reserva.IdReserva">
+                                <i class="fas fa-info-circle"></i>
+                            </button> 
+                            <a class="btn btn-danger btn-circle btn-sm" href="@Url.Action("Delete","Reserva", new { id = item.Reserva.IdReserva })">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!--Modal detalle reserva-->
+<div class="modal fade" id="DetalleReserva" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+</div>
+
+
+<!--Modal horarios disponibles-->
+<div class="modal fade" id="horariosDisponibles" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reservar horarios</h5>
+            </div>
+            <div class="modal-body">
+                <table class="table datatable_init datatable_init_modal">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Tema
+                            </th>
+                            <th scope="col">
+                                Fecha y hora
+                            </th>
+                            <th scope="col">
+                                Tutor
+                            </th>
+                            <th scope="col">
+                                Espacios disponibles
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Horarios as IList<ReservaTutorias.Frontend.Models.ModelViews.ViewHorario>)
+                        {
+                            var espaciosDisponibles = item.Horario.LimiteEstudiantes - ((List<int>)ViewBag.AllReservas).Count(x=>x == item.Horario.IdHorario);
+                            if (espaciosDisponibles > 0)
+                            {
+                                <tr class="select_row">
+                                    <td>
+                                        <span class="idHorario d-none">@item.Horario.IdHorario</span> @item.Tema.NombreTema
+                                    </td>
+                                    <td>
+                                        @item.Horario.FechaHora
+                                    </td>
+                                    <td>
+                                        @item.Tutor.Nombre @item.Tutor.Apellidos
+                                    </td>
+                                    <td>
+                                        <p style="color: @(espaciosDisponibles > 2 ? "green" : "red");">@espaciosDisponibles</p>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#horariosDisponibles">Cancelar</button>
+                <button type="button" class="btn btn-success" id="btnReservarHorario">Reservar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        //@@ sourceURL=Index.cshtml
+        var reservaData = [];
+        // Eventos
+        $('.datatable_init_modal tbody').on('click', 'tr', function (e) {
+            e.preventDefault();
+            if ($(this).hasClass('table-primary')) {
+                $(this).removeClass('table-primary');
+                var idHorario = $(this).find(".idHorario").text().trim();
+                QuitarReserva(idHorario);
+
+            }
+            else {
+                $('datatable_init_modal tbody tr.selected').removeClass('table-primary');
+                $(this).addClass('table-primary');
+                var idHorario = $(this).find(".idHorario").text().trim();
+                AgregarReservas(idHorario);
+            }
+            e.stopImmediatePropagation();
+        });
+        $("#btnReservarHorario").on("click",function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Create","Reserva")",
+                data: { reservaData: JSON.stringify(reservaData) }
+            }).done(function (response) {
+                if (response.ok)
+                    location.href = "@Url.Action("Index","Reserva")"
+                else
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al reservar la tutoría'
+                    });
+            }).fail(function (e) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al reservar la tutoría'
+                });
+            });
+            e.stopImmediatePropagation();
+        });
+        $(".openModal").on("click", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("Details","Reserva")",
+                data: { id: $(this).val() }
+            }).done(function (resp) {
+                $("#DetalleReserva").html(resp);
+                $("#DetalleReserva").modal("show");
+            }).fail(function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al abrir la reserva'
+                });
+            });
+            e.stopImmediatePropagation();
+        });
+
+        // Funciones
+        function AgregarReservas(IdHorario) {
+            reservaData.push({ IdHorario: parseInt(IdHorario) });
+        }
+        function QuitarReserva(IdHorario) {
+            var aux = [];
+            for (var i = 0; i < reservaData.length; i++) {
+                if (reservaData[i].IdHorario != IdHorario) {
+                    aux.push(reservaData[i]);
+                }
+            }
+            reservaData = aux;
+        }
+
+    </script>
 }
-    </tbody>
-</table>

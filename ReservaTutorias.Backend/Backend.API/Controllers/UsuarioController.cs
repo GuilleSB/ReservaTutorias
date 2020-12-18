@@ -78,7 +78,7 @@ namespace Backend.API.Controllers
         {
             new BS.Usuario(_context).Insert(Usuario);
 
-            return CreatedAtAction("GetUsuario", new { id = Usuario.IdUsuario }, Usuario);
+            return CreatedAtAction("GetUsuario", new { id = Usuario.IdUsuario }, Usuario);  
         }
 
         // DELETE: api/Usuario/5

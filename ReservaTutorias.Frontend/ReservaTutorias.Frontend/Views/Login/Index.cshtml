@@ -13,45 +13,32 @@
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
                     </div>
-                    <form class="user">
+                    <form class="user" action="@Url.Action("Login","Login")" method="POST">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <input type="email" class="form-control form-control-user"
                                    id="exampleInputEmail" aria-describedby="emailHelp"
-                                   placeholder="Nombre de usuario">
+                                   name="Correo"
+                                   placeholder="Correo">
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control form-control-user"
+                                   name="Clave"
                                    id="exampleInputPassword" placeholder="Contraseña">
                         </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox small">
-                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                <label class="custom-control-label" for="customCheck">
-                                    Recordarme
-                                </label>
-                            </div>
-                        </div>
-                        <a href="@Url.Action("Index","Home")" class="btn btn-primary btn-user btn-block">
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
                             Ingresar
-                        </a>
-                        <hr>
-                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                            <i class="fab fa-google fa-fw"></i> Ingresar con Google
-                        </a>
-                        @*<a href="index.html" class="btn btn-facebook btn-user btn-block">
-                            <i class="fab fa-facebook-f fa-fw"></i> Ingresar con Facebook
-                        </a>*@
+                        </button>
                     </form>
                     <hr>
                     <div class="text-center">
-                        <a class="small" href="forgot-password.html">¿Olvidaste tu contraseña?</a>
+                        <a class="small" href="@Url.Action("OlvidaClave","Login")">¿Olvidaste tu contraseña?</a>
                     </div>
                     <div class="text-center">
-                        <a class="small" href="register.html">¡Crea una nueva cuenta!</a>
+                        <a class="small" href="@Url.Action("Registro","Login")">¡Crea una nueva cuenta!</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

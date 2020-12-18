@@ -1,0 +1,61 @@
+﻿@model ReservaTutorias.Frontend.Models.ModelViews.ViewReserva
+<div class="modal-dialog modal-lg" id="cargarModalDetalleReserva">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Reservar horarios</h5>
+        </div>
+        <div class="modal-body">
+            <p>
+                <b>Link: </b>
+
+                @if (Model.Horario.Horario.LinkReunion != null)
+                {
+                    <a target="_blank" href="@Model.Horario.Horario.LinkReunion">Link de la reunión</a>
+                }
+                else
+                {
+                    <span>No hay link</span>
+                }
+            <textarea maxlength="1024" class="form-control" id="notasReserva" rows="8">@Model.Reserva.Notas</textarea>
+            <p class="d-none text-success" id="txtSuccessNota">Notas guardadas correctamente</p>
+            <p class="d-none text-danger" id="txtErrorNota">Error al guardar notas</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#DetalleReserva">Cancelar</button>
+            <button type="button" class="btn btn-success" id="btnActualizarReserva" value="@Model.Reserva.IdReserva">Guardar notas</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btnActualizarReserva").on("click", function (e) {
+        e.preventDefault();
+        var notas = $("#notasReserva").val();
+        var idReserva = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url:"@Url.Action("Edit","Reserva")",
+            data: { idReserva, notas }
+        }).done(function (resp) {
+            if (resp.ok) {
+                $("#txtSuccessNota").removeClass("d-none");
+                setTimeout(function () {
+                    $("#txtSuccessNota").addClass("d-none");
+                }, 4000);
+            } else {
+                $("#txtErrorNota").removeClass("d-none");
+                setTimeout(function () {
+                    $("#txtErrorNota").addClass("d-none");
+                }, 4000);
+            }
+        }).fail(function () {
+            $("#txtErrorNota").removeClass("d-none");
+            setTimeout(function () {
+                $("#txtErrorNota").addClass("d-none");
+            }, 4000);
+        });
+
+        e.stopImmediatePropagation();
+    });
+</script>

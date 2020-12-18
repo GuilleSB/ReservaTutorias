@@ -1,6 +1,7 @@
 ﻿using Backend.DAL.EF;
 using Backend.DO.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Data = Backend.DO.Objects;
 
 namespace Backend.BS
@@ -22,7 +23,14 @@ namespace Backend.BS
         {
             return new DAL.Tema(_repo).GetAll();
         }
-
+        public async Task<IEnumerable<Data.Tema>> GetAllInclude()
+        {
+            return await new DAL.Tema(_repo).GetAllInclude();
+        }
+        public async Task<Data.Tema> GetByIdInclude(int id)
+        {
+            return await new DAL.Tema(_repo).GetByIdInclude(id);
+        }
         public Data.Tema GetOneById(int id)
         {
             return new DAL.Tema(_repo).GetOneById(id);

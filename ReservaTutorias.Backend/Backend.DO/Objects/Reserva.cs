@@ -12,6 +12,6 @@ namespace Backend.DO.Objects
         public int IdReserva { get; set; }
         public int IdEstudiante { get; set; }
         public int IdHorario { get; set; }
-
+        public string Notas { get; set; }
     }
 }

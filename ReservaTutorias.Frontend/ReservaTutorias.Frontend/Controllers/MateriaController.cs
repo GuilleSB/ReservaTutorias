@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ReservaTutorias.Frontend.Models;
+using ReservaTutorias.Frontend.Utils.Filters;
 
 namespace ReservaTutorias.Frontend.Controllers
 {
+    [AuthorizeView("Tutor,Administrador")]
     public class MateriaController : Controller
     {
-        string baseurl = "https://localhost:44362/";
+        string baseurl = "http://panchoalambra-001-site1.ftempurl.com/";
         // GET: Materia
         public async Task<IActionResult> Index()
         {
@@ -102,10 +104,7 @@ namespace ReservaTutorias.Frontend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind] Materia Materia)
         {
-            if (id != Materia.IdMateria)
-            {
-                return NotFound();
-            }
+           
 
             if (ModelState.IsValid)
             {
@@ -118,7 +117,7 @@ namespace ReservaTutorias.Frontend.Controllers
                         var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                         var byteContent = new ByteArrayContent(buffer);
                         byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        var postTask = cl.PutAsync("api/Materia/" + id, byteContent).Result;
+                        var postTask = cl.PutAsync("api/Materia/" + Materia.IdMateria, byteContent).Result;
 
                         if (postTask.IsSuccessStatusCode)
                         {

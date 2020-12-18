@@ -4,39 +4,62 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h1>Lista de temas</h1>
+        <p>
+            <a asp-action="Create">Ingresar nuevo tema</a>
+        </p>
+        <table class="table datatable_init">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdTema)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NombreTema)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdMateria)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdTema)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreTema)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Materia.NombreMateria)
+                    </td>
+                    <td>
+                        
+                        
+                        
 
-<h1>Index</h1>
+                        <a class="btn btn-primary btn-circle btn-sm" href="@Url.Action("Edit", "Tema", new { id = item.IdTema }) ">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                        <a class="btn btn-info btn-circle btn-sm" href="@Url.Action("Details", "Tema", new { id = item.IdTema }) ">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a class="btn btn-danger btn-circle btn-sm" href="@Url.Action("Delete", "Tema", new { id = item.IdTema })">
+                            <i class="fas fa-trash"></i>
+                        </a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTema)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreTema)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTema)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreTema)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.IdTema }) |
-                @Html.ActionLink("Detalle", "Details", new { id = item.IdTema }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.IdTema })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

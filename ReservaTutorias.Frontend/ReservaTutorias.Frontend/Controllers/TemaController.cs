@@ -4,14 +4,17 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using ReservaTutorias.Frontend.Models;
+using ReservaTutorias.Frontend.Utils.Filters;
 
 namespace ReservaTutorias.Frontend.Controllers
 {
+    [AuthorizeView("Tutor,Administrador")]
     public class TemaController : Controller
     {
-        string baseurl = "https://localhost:44362/";
+        string baseurl = "http://panchoalambra-001-site1.ftempurl.com/";
         // GET: Tema
         public async Task<IActionResult> Index()
         {
@@ -41,6 +44,7 @@ namespace ReservaTutorias.Frontend.Controllers
             }
 
             var Tema = await GetTemaById(id);
+            Tema.Materia = GetAllMateria().SingleOrDefault(x=> x.IdMateria == Tema.IdMateria);
             if (Tema == null)
             {
                 return NotFound();
@@ -52,6 +56,7 @@ namespace ReservaTutorias.Frontend.Controllers
         // GET: Tema/Create
         public async Task<IActionResult> Create()
         {
+            ViewData["IdMateria"] = new SelectList(GetAllMateria(), "IdMateria", "NombreMateria");
             return View();
         }
 
@@ -77,7 +82,8 @@ namespace ReservaTutorias.Frontend.Controllers
                     }
                 }
             }
-            ModelState.AddModelError(string.Empty, "Server Error, Please contact administrator");
+            ViewData["IdMateria"] = new SelectList(GetAllMateria(), "IdMateria", "NombreMateria");
+            ModelState.AddModelError(string.Empty, "Error al crear el tema");
             return View(Tema);
         }
 
@@ -94,6 +100,7 @@ namespace ReservaTutorias.Frontend.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdMateria"] = new SelectList(GetAllMateria(), "IdMateria", "NombreMateria");
             return View(Tema);
         }
 
@@ -102,10 +109,6 @@ namespace ReservaTutorias.Frontend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind] Tema Tema)
         {
-            if (id != Tema.IdTema)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -118,7 +121,7 @@ namespace ReservaTutorias.Frontend.Controllers
                         var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                         var byteContent = new ByteArrayContent(buffer);
                         byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        var postTask = cl.PutAsync("api/Tema/" + id, byteContent).Result;
+                        var postTask = cl.PutAsync("api/Tema/" + Tema.IdTema, byteContent).Result;
 
                         if (postTask.IsSuccessStatusCode)
                         {
@@ -140,6 +143,7 @@ namespace ReservaTutorias.Frontend.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdMateria"] = new SelectList(GetAllMateria(), "IdMateria", "NombreMateria");
             return View(Tema);
         }
 
@@ -152,6 +156,7 @@ namespace ReservaTutorias.Frontend.Controllers
             }
 
             var Tema = await GetTemaById(id);
+            Tema.Materia = GetAllMateria().SingleOrDefault(x => x.IdMateria == Tema.IdMateria);
             if (Tema == null)
             {
                 return NotFound();
@@ -180,8 +185,6 @@ namespace ReservaTutorias.Frontend.Controllers
             return RedirectToAction("Index");
         }
 
-
-
         private async Task<Tema> GetTemaById(int? id)
         {
             Tema aux = new Tema();
@@ -196,6 +199,25 @@ namespace ReservaTutorias.Frontend.Controllers
                 {
                     var auxres = res.Content.ReadAsStringAsync().Result;
                     aux = JsonConvert.DeserializeObject<Tema>(auxres);
+                }
+            }
+            return aux;
+        }
+
+        private List<Materia> GetAllMateria()
+        {
+            List<Materia> aux = new List<Materia>();
+            using (var cl = new HttpClient())
+            {
+                cl.BaseAddress = new Uri(baseurl);
+                cl.DefaultRequestHeaders.Clear();
+                cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage res = cl.GetAsync("api/Materia").Result;
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var auxres = res.Content.ReadAsStringAsync().Result;
+                    aux = JsonConvert.DeserializeObject<List<Materia>>(auxres);
                 }
             }
             return aux;

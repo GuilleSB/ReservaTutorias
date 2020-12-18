@@ -6,16 +6,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ReservaTutorias.Frontend.Models;
+using ReservaTutorias.Frontend.Utils;
+using ReservaTutorias.Frontend.Utils.Extensions;
+using ReservaTutorias.Frontend.Utils.Filters;
 
 namespace ReservaTutorias.Frontend.Controllers
 {
+    [AuthorizeView("Administrador")]
     public class UsuarioController : Controller
     {
-        string baseurl = "https://localhost:44362/";
+        string baseurl = "http://panchoalambra-001-site1.ftempurl.com/";
+        private readonly ISeguridad _seguridad;
+        public UsuarioController(ISeguridad iseguridad)
+        {
+            _seguridad = iseguridad;
+        }
         // GET: Usuario
         public async Task<IActionResult> Index()
         {
             List<Usuario> aux = new List<Usuario>();
+            var sesion = HttpContext.Session.GetObject<Usuario>("session");
             using (var cl = new HttpClient())
             {
                 cl.BaseAddress = new Uri(baseurl);
@@ -27,6 +37,7 @@ namespace ReservaTutorias.Frontend.Controllers
                 {
                     var auxres = res.Content.ReadAsStringAsync().Result;
                     aux = JsonConvert.DeserializeObject<List<Usuario>>(auxres);
+                    aux = aux.FindAll(x => x.IdUsuario != sesion.IdUsuario);
                 }
             }
             return View(aux);
@@ -62,6 +73,8 @@ namespace ReservaTutorias.Frontend.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Enctriptar contraseña
+                Usuario.Clave = _seguridad.CreatePwdHash(Usuario.Clave);
                 using (var cl = new HttpClient())
                 {
                     cl.BaseAddress = new Uri(baseurl);
@@ -102,13 +115,9 @@ namespace ReservaTutorias.Frontend.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind] Usuario Usuario)
         {
-            if (id != Usuario.IdUsuario)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
+                Usuario.Clave = GetUsuarioById(Usuario.IdUsuario).Result.Clave;
                 try
                 {
                     using (var cl = new HttpClient())
@@ -118,7 +127,7 @@ namespace ReservaTutorias.Frontend.Controllers
                         var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                         var byteContent = new ByteArrayContent(buffer);
                         byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        var postTask = cl.PutAsync("api/Usuario/" + id, byteContent).Result;
+                        var postTask = cl.PutAsync("api/Usuario/" + Usuario.IdUsuario, byteContent).Result;
 
                         if (postTask.IsSuccessStatusCode)
                         {
@@ -169,7 +178,6 @@ namespace ReservaTutorias.Frontend.Controllers
                 cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                //HttpResponseMessage res = await cl.GetAsync("api/Usuario/5?"+id);
                 HttpResponseMessage res = await cl.DeleteAsync("api/Usuario/" + id);
 
                 if (res.IsSuccessStatusCode)

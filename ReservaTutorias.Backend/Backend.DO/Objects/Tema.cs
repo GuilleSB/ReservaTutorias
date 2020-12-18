@@ -11,5 +11,8 @@ namespace Backend.DO.Objects
         [Key]
         public int IdTema { get; set; }
         public string NombreTema { get; set; }
+        public int IdMateria { get; set; }
+        public virtual Materia Materia {get;set;}
+
     }
 }

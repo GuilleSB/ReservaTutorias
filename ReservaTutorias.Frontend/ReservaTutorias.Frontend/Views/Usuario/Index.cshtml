@@ -5,62 +5,75 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="row justify-content-center">
+    <div class="col-md-10">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellidos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Correo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTipoUsuario)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Correo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTipoUsuario)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.IdUsuario }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IdUsuario }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IdUsuario })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <h1>Lista de usuarios</h1>
+
+        <p>
+            <a asp-action="Create">Ingresar nuevo usuario</a>
+        </p>
+        <table class="table datatable_init">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdUsuario)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cedula)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Apellidos)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Correo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoUsuario)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdUsuario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cedula)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellidos)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Correo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoUsuario)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-circle btn-sm" href="@Url.Action("Edit", "Usuario", new { id = item.IdUsuario })">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a class="btn btn-info btn-circle btn-sm" href="@Url.Action("Details", "Usuario", new { id = item.IdUsuario })">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                            <a class="btn btn-danger btn-circle btn-sm" href="@Url.Action("Delete", "Usuario", new { id = item.IdUsuario })">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

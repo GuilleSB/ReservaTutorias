@@ -11,9 +11,9 @@ namespace Backend.DO.Objects
         [Key]
         public int IdHorario { get; set; }
         public int IdTutor { get; set; }
-        public int IdMateria { get; set; }
         public int IdTema { get; set; }
         public DateTime FechaHora { get; set; }
         public int LimiteEstudiantes { get; set; }
+        public string LinkReunion { get; set; }
     }
 }
