@@ -33,7 +33,8 @@
                 </dd>
             </dl>
             <form asp-action="Delete">
-                <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <button type="submit" class="btn btn-danger" name="id" value="@Model.IdTema">Eliminar</button> |
                 <a asp-action="Index">Volver</a>
             </form>
         </div>

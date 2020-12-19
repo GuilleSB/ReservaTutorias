@@ -218,6 +218,7 @@ namespace ReservaTutorias.Frontend.Controllers
 
                         if (postTask.IsSuccessStatusCode)
                         {
+                            HttpContext.Session.SetObject("session", Usuario);
                             return RedirectToAction("Index","Home");
                         }
                     }

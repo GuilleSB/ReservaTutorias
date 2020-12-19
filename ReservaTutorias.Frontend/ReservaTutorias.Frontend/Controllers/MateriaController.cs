@@ -79,7 +79,7 @@ namespace ReservaTutorias.Frontend.Controllers
                     }
                 }
             }
-            ModelState.AddModelError(string.Empty, "Server Error, Please contact administrator");
+            ModelState.AddModelError(string.Empty, "Error al crear la materia");
             return View(Materia);
         }
 
@@ -176,7 +176,9 @@ namespace ReservaTutorias.Frontend.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index");
+            ModelState.AddModelError(string.Empty, "No se puede eliminar la materia, pues tiene registros dependientes");
+            var Materia = await GetMateriaById(id);
+            return View(Materia);
         }
 
 

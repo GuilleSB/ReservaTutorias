@@ -235,7 +235,8 @@ namespace ReservaTutorias.Frontend.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index");
+            ModelState.AddModelError(string.Empty, "No se puede eliminar el horario, pues tiene registros dependientes");
+            return View(MapViewHorarioSingle(GetHorarioById(id).Result.Horario));
         }
 
 

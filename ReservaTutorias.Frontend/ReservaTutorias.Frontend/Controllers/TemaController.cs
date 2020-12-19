@@ -182,7 +182,9 @@ namespace ReservaTutorias.Frontend.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index");
+            var Tema = await GetTemaById(id);
+            ModelState.AddModelError(string.Empty, "Error al eliminar el tema");
+            return View(Tema);
         }
 
         private async Task<Tema> GetTemaById(int? id)

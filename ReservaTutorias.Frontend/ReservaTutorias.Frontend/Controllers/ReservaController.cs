@@ -158,7 +158,7 @@ namespace ReservaTutorias.Frontend.Controllers
                 return NotFound();
             }
 
-            var Reserva = await GetReservaById(id);
+            var Reserva = MapViewReservaSingle(await GetReservaById(id));
             if (Reserva == null)
             {
                 return NotFound();
@@ -184,7 +184,9 @@ namespace ReservaTutorias.Frontend.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index");
+            var Reserva = MapViewReservaSingle(await GetReservaById(id));
+            ModelState.AddModelError(string.Empty, "Error al eliminar la reserva");
+            return View(Reserva);
         }
 
 

@@ -90,7 +90,7 @@ namespace ReservaTutorias.Frontend.Controllers
                     }
                 }
             }
-            ModelState.AddModelError(string.Empty, "Server Error, Please contact administrator");
+            ModelState.AddModelError(string.Empty, "Error al crear el usuario");
             return View(Usuario);
         }
 
@@ -185,7 +185,9 @@ namespace ReservaTutorias.Frontend.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index");
+            var Usuario = await GetUsuarioById(id);
+            ModelState.AddModelError(string.Empty, "No se puede eliminar el usuario, pues tiene registros dependientes");
+            return View(Usuario);
         }
 
 
